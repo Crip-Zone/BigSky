@@ -70,9 +70,6 @@
 		width: calc(100% - 90px);
 		max-width: unset;
 	}
-	h3.catbg, h3.catbg a, h3.catbg a:hover {
-	height: fit-content;
-	}
 }
 
 /* We have shared things... */
@@ -134,7 +131,7 @@
 
 	/* Stuff */
 	#top_info {
-		padding: 10px;
+		padding: 5px;
 	}
 	.infolinks {
 		display: inline-block;
@@ -172,28 +169,14 @@
 	.action_home {
 		width: 100% !important;
 	}
-	#profile_menu_top > img.avatar {
-		margin: 4px 5px 0 0;
-	}
-	.navigate_section ul {
-/*		margin: 4px 0 -10px 0; */
-	}
 	#wrapper {
 		border-left: 0;
 		border-right: 0;
 		border-radius: 0;
-		padding-bottom: 1px;
 	}
-	#top_section {
-		height: 40px;
+	#footer {
+		padding: 10px;
 	}
-	#top_info > li > a {
-		padding: 0 7px 7px 7px;
-		margin: -3px -19px 5px 12px;
-	}
-	#top_info > li > a.open {
-		height: fit-content;
-}
 	#top_section .inner_wrap, #wrapper, #header, #footer .inner_wrap {
 		width: 100%;
 	}
@@ -437,13 +420,9 @@
 	}
 
 	/* Admin */
-	.admin_search, form.admin_search {
-		padding: 1px 5px 3px 5px;
-		font-size: 0.9em;
+	.admin_search {
 		float: none;
-		justify-content: space-between;
-		align-items: center;
-}
+	}
 	.table_grid.half_content {
 		width: 100%;
 		margin: 0;
@@ -475,7 +454,6 @@
 @media (min-width: 561px) {
 	#mobile_user_menu.popup_container {
 		display: block !important;
-		height: auto;
 	}
 	div[id^="mobile_generic_menu_"].popup_container {
 		display: block !important;
@@ -486,8 +464,6 @@
 		box-shadow: none;
 		border-width: 0;
 		background: none;
-		border-radius: 7px;
-		background: hsl(0, 0%, 91%);
 	}
 }
 @media (max-width: 560px) {
@@ -507,12 +483,14 @@
 	#genericmenu .popup_heading,
 	#adm_submenus .popup_heading {
 		display: block;
-		color: hsl(0, 0%, 100%);
-		background: hsl(204, 81%, 45%);
+		background: var(--menu_bg_color);
+  		border-radius: 9px 9px 0px 0px;
 	}
 	#main_menu {
 		margin: 0;
+		background: transparent;
 	}
+	.popup_window,
 	#main_menu .popup_window,
 	#genericmenu .popup_window,
 	#adm_submenus .popup_window {
@@ -522,21 +500,7 @@
 		max-height: 90vh;
 		overflow-x: hidden;
 		overflow-y: scroll;
-		border-radius: 7px;
-		background: linear-gradient(to bottom, hsl(0, 0%, 100%) 0, hsl(0, 0%, 87%) 50%);
-	}
-	.popup_window {
-		top: 15%;
-		width: 95vw;
-		min-height: auto;
-		max-height: 90vh;
-		overflow-x: hidden;
-		overflow-y: scroll;
-		border-radius: 7px;
-		background: hsl(206, 82%, 47%);
-	}
-	#adm_submenus .popup_window {
-		background: hsl(0, 0%, 100%);
+		background: hsl(207.1, 67%, 36.9%);
 	}
 	#adm_submenus {
 		padding: 0;
@@ -551,9 +515,6 @@
 	#mobile_user_menu .dropmenu,
 	div[id^="mobile_generic_menu_"] .generic_menu {
 		display: block;
-		height: auto;
-		padding-top: 0;
-		background: hsl(0, 0%, 100%);
 	}
 	a.mobile_user_menu,
 	a[class^="mobile_generic_menu_"] {
@@ -596,24 +557,18 @@
 	.dropmenu li li:hover ul, .dropmenu li li ul {
 		border-left: 0;
 		border-right: 0;
+		box-shadow: 0 -1px 0 hsla(0, 0%, 100%, 0.3);
 	}
 	.dropmenu ul li a {
 		width: auto !important;
 	}
 	.dropmenu li.subsections > a::after {
 		position: absolute;
-		padding: 5px 7px;
+		padding: 5px 0;
 		right: 10px;
 		font: 83.33%/150% Arial, sans-serif;
 		content: "\25bc" !important;
 	}
-	.dropmenu li li.subsections > a::after {
-		position: absolute;
-		padding: 5px 5px 5px 0;
-		right: 10px;
-		font: 83.33%/150% Arial, sans-serif;
-		content: "\25ba";
-}
 	.dropmenu li ul,
 	.dropmenu li li:hover ul, .dropmenu li li ul {
 		position: relative;
@@ -659,9 +614,7 @@
 		max-width: calc(100vw - 17px);
 	}
 	#footer {
-/*		text-align: center; */
-		padding: 10px;
-		margin-bottom: 0;
+		text-align: center;
 	}
 	#footer ul {
 		width: 100%;
@@ -918,21 +871,4 @@
 /* iPhone Tests */
 @media (max-width: 320px) {
 
-}
-.column {
-  float: right;
-  width: 30%;
-/*  padding: none; */
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* For the Packages Permissions th */
-form th {
-	color: hsl(0, 0%, 0%);
 }
