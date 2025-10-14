@@ -48,7 +48,7 @@ function template_init()
 	$settings['theme_version'] = '2.1';
 
 	// Set the following variable to true if this theme requires the optional theme strings file to be loaded.
-	$settings['require_theme_strings'] = true;
+	$settings['require_theme_strings'] = false;
 
 	// Set the following variable to true if this theme wants to display the avatar of the user that posted the last and the first post on the message index and recent pages.
 	$settings['avatars_on_indexes'] = false;
@@ -321,7 +321,7 @@ function template_body_above()
 	{
 		echo '
 			<form id="search_form" class="floatright" action="', $scripturl, '?action=search2" method="post" accept-charset="', $context['character_set'], '">
-				<input type="search" name="search" value="">&nbsp;';
+				<input type="search" name="search" value="', $txt['search'], '..." onfocus="this.value = \'\';" onblur="if(this.value==\'\') this.value=\'', $txt['search'], '...\';" />';
 
 		// Using the quick search dropdown?
 		$selected = !empty($context['current_topic']) ? 'current_topic' : (!empty($context['current_board']) ? 'current_board' : 'all');
@@ -367,61 +367,18 @@ function template_body_above()
 	echo '
 		</div><!-- .inner_wrap -->
 	</div><!-- #top_section -->';
-	
+
 	echo '
 	<div id="header">
 			<h1 class="forumtitle">
 				<a href="', $scripturl, '">', empty($context['header_logo_url_html_safe']) ? '<img src="'. $settings['images_url']. '/custom/logo.png" alt="' . $context['forum_name'] . '" title="' . $context['forum_name'] . '" >' : '<img src="' . $context['header_logo_url_html_safe'] . '" alt="' . $context['forum_name'] . '" title="' . $context['forum_name'] . '" >', '</a>
 			</h1>';
-
 	echo '
-
-						<div class="user hide_720">
-						<time datetime="', smf_gmstrftime('%FT%TZ'), '">', $context['current_time'], '</time>';
-
-	if ($context['user']['is_logged'])
-		echo '
-						<ul class="unread_links">
-							<li>
-								<a href="', $scripturl, '?action=unread" title="', $txt['unread_since_visit'], '">', $txt['unread_since_visit'], '</a>
-							</li>
-							<li>
-								<a href="', $scripturl, '?action=unreadreplies" title="', $txt['show_unread_replies'], '">', $txt['show_unread_replies'], '</a>
-							</li>
-						</ul>';
-						
-						
-	// Otherwise they're a guest. 
-	
-		else
-		{
-		echo '
 		', empty($settings['site_slogan']) ? '<img id="smflogo" src="' . $settings['images_url'] . '/smflogo.svg" alt="Simple Machines Forum" title="Simple Machines Forum">' : '<div id="siteslogan">' . $settings['site_slogan'] . '</div>', '';
 
-	}
 	echo '
-					</div>'; //end of user stuff
-
-
-		// Show a random news item? (or you could pick one from news_lines...)
-	if (!empty($settings['enable_news']) && !empty($context['random_news_line']))
-		echo '
-					<div class="news">
-						<h2>', $txt['news'], ': </h2>
-						<p>', $context['random_news_line'], '</p>
-					</div>';
-					
-
-	echo '
-				
-				</div>'; // end of the header.
-				
-	echo '
-	<div id="wrapper">
-		<div id="upper_section">
-			<div id="inner_section">';
-
-	// Show the menu here, according to the menu sub template, followed by the navigation tree.
+	</div>';
+		// Show the menu here, according to the menu sub template, followed by the navigation tree.
 	// Load mobile menu here
 	echo '
 				<a class="mobile_user_menu">
@@ -438,7 +395,39 @@ function template_body_above()
 						</div>
 					</div>
 				</div>';
-				
+	echo '
+	<div id="wrapper">
+		<div id="upper_section">
+			<div id="inner_section">
+				<div id="inner_wrap"', !$context['user']['is_logged'] ? ' class="hide_720"' : '', '>
+					<div class="user">
+						<time datetime="', smf_gmstrftime('%FT%TZ'), '">', $context['current_time'], '</time>';
+
+	if ($context['user']['is_logged'])
+		echo '
+						<ul class="unread_links">
+							<li>
+								<a href="', $scripturl, '?action=unread" title="', $txt['unread_since_visit'], '">', $txt['view_unread_category'], '</a>
+							</li>
+							<li>
+								<a href="', $scripturl, '?action=unreadreplies" title="', $txt['show_unread_replies'], '">', $txt['unread_replies'], '</a>
+							</li>
+						</ul>';
+
+	echo '
+					</div>';
+
+	// Show a random news item? (or you could pick one from news_lines...)
+	if (!empty($settings['enable_news']) && !empty($context['random_news_line']))
+		echo '
+					<div class="news">
+						<h2>', $txt['news'], ': </h2>
+						<p>', $context['random_news_line'], '</p>
+					</div>';
+
+	echo '
+				</div>';
+
 	theme_linktree();
 
 	echo '
@@ -460,8 +449,9 @@ function template_body_below()
 
 	echo '
 			</div><!-- #main_content_section -->
-		</div><!-- #content_section -->';
-
+		</div><!-- #content_section -->
+	</div><!-- #wrapper -->
+</div><!-- #footerfix -->';
 
 	// Show the footer with copyright, terms and help links.
 	echo '
@@ -470,34 +460,21 @@ function template_body_below()
 
 	// There is now a global "Go to top" link at the right.
 	echo '
-<div class="row">
-  <div class="column">
-    <h2>', $txt['Navigate'], '</h2>
-    <p><a href="'.$scripturl.'">' . $txt['home'] . '</a></p>
-    <p><a href="', $scripturl, '?action=calendar">' . $txt['calendar'] . '</a></p>
-    <p><a href="', $scripturl, '?action=search">' . $txt['search'] . '</a></p>
-  </div>
-  <div class="column">
-    <h2>', $txt['Design'], '</h2>
-    <p>',$txt['themecopyright']. ' </p>
-  </div>
-  <div class="column">
-    <h2>', $txt['copyrights'], '</h2>
-    <p><a href="', $scripturl, '?action=help">', $txt['help'], '</a> ', (!empty($modSettings['requireAgreement'])) ? '| <a href="' . $scripturl . '?action=agreement">' . $txt['terms_and_rules'] . '</a>' : '', ' | <a href="#header">', $txt['go_up'], ' &#9650;</a></p>
-    <ul><li class="copyright">', theme_copyright(), '</li></ul>';
+		<ul>
+			<li class="floatright"><a href="', $scripturl, '?action=help">', $txt['help'], '</a> ', (!empty($modSettings['requireAgreement'])) ? '| <a href="' . $scripturl . '?action=agreement">' . $txt['terms_and_rules'] . '</a>' : '', ' | <a href="#header">', $txt['go_up'], ' &#9650;</a></li>
+            <li>BigSky by <a href="https://www.jpr62.com/theme/" target="_blank" class="new_win" title="Crip Zone">Crip</a> | Updated for SMF 2.1 By <a href="https://www.jpr62.com/theme/" target="_blank" class="new_win" title="The Crip Zone Team">TheCripZone</a></li>
+            <li class="copyright">', theme_copyright(), '</li>
+		</ul>';
 
-		// Show the load time?
+	// Show the load time?
 	if ($context['show_load_time'])
 		echo '
-		<p>', sprintf($txt['page_created_full'], $context['load_time'], $context['load_queries']), '</p>
-  </div>
-</div>';
+		<p>', sprintf($txt['page_created_full'], $context['load_time'], $context['load_queries']), '</p>';
+
 	echo '
 		</div>
-      </div><!-- #footer -->
-		
-	</div><!-- #wrapper -->
-</div><!-- #footerfix -->';
+	</div><!-- #footer -->';
+
 }
 
 /**
@@ -541,7 +518,7 @@ function theme_linktree($force_show = false)
 		// Picked a better looking HTML entity, and added support for RTL plus a span for styling.
 		if ($link_num != 0)
 			echo '
-							<span class="dividers">', $context['right_to_left'] ? ' &raquo; ' : ' &raquo; ', '</span>';
+							<span class="dividers">', $context['right_to_left'] ? ' &#9668; ' : ' &#9658; ', '</span>';
 
 		// Show something before the link?
 		if (isset($tree['extra_before']))

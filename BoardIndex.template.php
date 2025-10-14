@@ -80,9 +80,9 @@ function template_main()
 
 		echo '
 					', $category['link'], '
-				</h3>', !empty($category['description']) ? '
-				<div class="desc">' . $category['description'] . '</div>' : '', '
-			</div>
+				', !empty($category['description']) ? '
+				<span class="desc">' . $category['description'] . '</span>' : '', '
+			</h3></div>
 			<div id="category_', $category['id'], '_boards" ', (!empty($category['css_class']) ? ('class="' . $category['css_class'] . '"') : ''), $category['is_collapsed'] ? ' style="display: none;"' : '', '>';
 
 		/* Each board in each category's boards has:
