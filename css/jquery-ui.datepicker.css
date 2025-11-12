@@ -102,6 +102,7 @@
 .ui-datepicker .ui-datepicker-header {
 	position: relative;
 	padding: .2em 0;
+    background: var(--cat_bg_color);
 }
 
 .ui-datepicker .ui-datepicker-prev,
